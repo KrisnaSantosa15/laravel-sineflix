@@ -98,7 +98,7 @@ class AdminController extends Controller
             $user->save();
         }
 
-        return redirect()->route('admin.users');
+        return redirect()->route('admin.users.index')->with('success', 'User created successfully');
     }
 
     public function show(AdminUser $adminUser)

@@ -100,7 +100,7 @@
                         </thead>
                         <tbody class="bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700">
                             {{-- show 'no results' when there's no result --}}
-                            @if ($genres->isEmpty())
+                            @if ($movies->isEmpty())
                                 <tr>
                                     <td colspan="4"
                                         class="p-4 text-base font-medium text-gray-900 dark:text-white text-center">

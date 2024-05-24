@@ -3,7 +3,7 @@
 <meta name="description" content="sineflix">
 <meta name="author" content="Krisna">
 
-<title>Sineflix</title>
+<title>{{ config('app.name', 'Sineflix') }}</title>
 
 {{-- <link rel="canonical" href="{{ .Permalink }}"> --}}
 

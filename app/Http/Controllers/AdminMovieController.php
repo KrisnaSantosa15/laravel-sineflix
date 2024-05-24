@@ -53,6 +53,10 @@ class AdminMovieController extends Controller
 
         // Create a new movie
         $request['slug'] = Str::slug($request->title);
+        // if there's already a slug with the same name, add a random number to the slug
+        if (AdminMovie::whereSlug($request['slug'])->first()) {
+            $request['slug'] = $request['slug'] . '-' . rand(1, 1000);
+        }
         AdminMovie::create([
             'title' => $request->title,
             'slug' => $request->slug,
@@ -109,6 +113,10 @@ class AdminMovieController extends Controller
 
         // Update a movie
         $request['slug'] = Str::slug($request->title);
+        // if there's already a slug with the same name, add a random number to the slug
+        if (AdminMovie::whereSlug($request['slug'])->where('id', '!=', $adminMovie->id)->first()) {
+            $request['slug'] = $request['slug'] . '-' . rand(1, 1000);
+        }
         $adminMovie->update([
             'title' => $request->title,
             'slug' => $request->slug,

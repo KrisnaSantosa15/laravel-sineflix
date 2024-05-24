@@ -1,10 +1,17 @@
-module.exports = {
+import defaultTheme from "tailwindcss/defaultTheme";
+import forms from "@tailwindcss/forms";
+
+/** @type {import('tailwindcss').Config} */
+export default {
     content: [
-        "./resources/**/*.blade.php",
+        "./vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php",
+        "./storage/framework/views/*.php",
+        "./resources/views/**/*.blade.php",
         "./resources/**/*.js",
         "./resources/**/*.vue",
         "./node_modules/flowbite/**/*.js",
     ],
+
     theme: {
         extend: {
             colors: {
@@ -24,6 +31,8 @@ module.exports = {
             fontFamily: {
                 sans: [
                     "Inter",
+                    "Figtree",
+                    ...defaultTheme.fontFamily.sans,
                     "ui-sans-serif",
                     "system-ui",
                     "-apple-system",
@@ -76,5 +85,6 @@ module.exports = {
             },
         },
     },
-    plugins: [require("flowbite/plugin")],
+
+    plugins: [require("flowbite/plugin"), forms],
 };
