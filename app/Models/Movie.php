@@ -31,6 +31,11 @@ class Movie extends Model
         return $this->belongsToMany(Stars::class);
     }
 
+    public function watchlist()
+    {
+        return $this->belongsToMany(Watchlist::class);
+    }
+
     // public function reviews()
     // {
     //     return $this->hasMany(Review::class);

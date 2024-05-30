@@ -1,477 +1,372 @@
-@extends('layouts._default.main')
+@extends('layouts._default.user-main')
 @section('content')
-    {{-- Breadcrumb --}}
-    <div
-        class="p-4 bg-white block sm:flex items-center justify-between border-b border-gray-200 lg:mt-1.5 dark:bg-gray-800 dark:border-gray-700">
-        <div class="w-full mb-1">
-            <div class="mb-4">
-                <nav class="flex mb-5" aria-label="Breadcrumb">
-                    <ol class="inline-flex items-center space-x-1 text-sm font-medium md:space-x-2">
-                        <li class="inline-flex items-center">
-                            <a href="#"
-                                class="inline-flex items-center text-gray-700 hover:text-primary-600 dark:text-gray-300 dark:hover:text-white">
-                                <svg class="w-5 h-5 mr-2.5" fill="currentColor" viewBox="0 0 20 20"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <path
-                                        d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z">
-                                    </path>
-                                </svg>
-                                Dashboard
-                            </a>
-                        </li>
-                        <li>
-                            <div class="flex items-center">
-                                <svg class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <path fill-rule="evenodd"
-                                        d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                                        clip-rule="evenodd"></path>
-                                </svg>
-                                <a href="#"
-                                    class="ml-1 text-gray-700 hover:text-primary-600 md:ml-2 dark:text-gray-300 dark:hover:text-white">E-commerce</a>
+    <!-- Hero section -->
+    <section>
+        <div class="swiper hero-swiper">
+            <!-- Additional required wrapper -->
+            <div class="swiper-wrapper">
+                <!-- Slides -->
+                @foreach ($movies->take(5) as $movie)
+                    <div class="swiper-slide">
+                        <img src="{{ $movie->poster_url }}" alt="{{ $movie->title }}" />
+                        <div class="overlay absolute inset-0 top-0 bottom-0 right-0 left-0"></div>
+                        <div
+                            class="p-8 text-white h-full flex flex-col justify-center md:justify-end z-10 absolute w-full md:w-1/2">
+                            <p class="text-sm mb-2 bg-gray-800 py-2 px-5 font-bold rounded-full" style="width: fit-content">
+                                {{ $movie->type }}
+                            </p>
+                            <p class="md:text-4xl font-bold mb-4 text-lg">
+                                {{ $movie->title }}
+                            </p>
+                            <p class="text-sm mb-4"> {{ \Carbon\Carbon::parse($movie->release_date)->format('Y') }} -
+                                {{ $movie->genres->first()->name }}</p>
+                            <p class="mb-6 truncate md:overflow-visible md:whitespace-normal">
+                                {{ $movie->plot_summary }}
+                            </p>
+                            <div class="flex space-x-4 mb-8">
+                                <a href="{{ url('movies/' . $movie->slug) }}"
+                                    class="inline-flex items-center justify-center whitespace-nowrap text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-bold rounded-lg text-sm me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 h-10 px-4 py-2">
+                                    <svg class="w-6 h-6 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                        width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                            stroke-width="2" d="M8 18V6l8 6-8 6Z" />
+                                    </svg>
+
+                                    Watch Trailer
+                                </a>
+                                @php
+                                    $isInWatchlist = in_array($movie->id, $watchlist);
+                                @endphp
+                                <button
+                                    class="toggle-watchlist-btn inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-bold text-white {{ $isInWatchlist ? 'bg-blue-700' : '' }} hover:text-white border {{ $isInWatchlist ? 'border-blue-700' : 'hover:bg-blue-800' }} focus:ring-4 focus:outline-none focus:ring-blue-300 text-center me-2 mb-2 dark:border-blue-500 dark:text-white dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800 h-10 px-4 py-2"
+                                    data-movie-id="{{ $movie->id }}">
+                                    @if ($isInWatchlist)
+                                        <svg class="w-6 h-6 text-white" aria-hidden="true"
+                                            xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                            fill="currentColor" viewBox="0 0 24 24">
+                                            <path
+                                                d="M7.833 2c-.507 0-.98.216-1.318.576A1.92 1.92 0 0 0 6 3.89V21a1 1 0 0 0 1.625.78L12 18.28l4.375 3.5A1 1 0 0 0 18 21V3.889c0-.481-.178-.954-.515-1.313A1.808 1.808 0 0 0 16.167 2H7.833Z" />
+                                        </svg>
+                                        Remove from Watchlist
+                                    @else
+                                        <svg class="w-6 h-6 text-white" aria-hidden="true"
+                                            xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
+                                            viewBox="0 0 24 24">
+                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                                stroke-width="2"
+                                                d="m17 21-5-4-5 4V3.889a.92.92 0 0 1 .244-.629.808.808 0 0 1 .59-.26h8.333a.81.81 0 0 1 .589.26.92.92 0 0 1 .244.63V21Z" />
+                                        </svg>
+                                        Add Watchlist
+                                    @endif
+                                </button>
                             </div>
-                        </li>
-                        <li>
-                            <div class="flex items-center">
-                                <svg class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <path fill-rule="evenodd"
-                                        d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                                        clip-rule="evenodd"></path>
-                                </svg>
-                                <span class="ml-1 text-gray-400 md:ml-2 dark:text-gray-500"
-                                    aria-current="page">Products</span>
-                            </div>
-                        </li>
-                    </ol>
-                </nav>
-                <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl dark:text-white">All products</h1>
-            </div>
-            <div class="items-center justify-between block sm:flex md:divide-x md:divide-gray-100 dark:divide-gray-700">
-                <div class="flex items-center mb-4 sm:mb-0">
-                    <form class="sm:pr-3" action="#" method="GET">
-                        <label for="products-search" class="sr-only">Search</label>
-                        <div class="relative w-48 mt-1 sm:w-64 xl:w-96">
-                            <input type="text" name="email" id="products-search"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                placeholder="Search for products">
-                        </div>
-                    </form>
-                    <div class="flex items-center w-full sm:justify-end">
-                        <div class="flex pl-2 space-x-1">
-                            <a href="#"
-                                class="inline-flex justify-center p-1 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
-                                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <path fill-rule="evenodd"
-                                        d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z"
-                                        clip-rule="evenodd"></path>
-                                </svg>
-                            </a>
-                            <a href="#"
-                                class="inline-flex justify-center p-1 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
-                                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <path fill-rule="evenodd"
-                                        d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
-                                        clip-rule="evenodd"></path>
-                                </svg>
-                            </a>
-                            <a href="#"
-                                class="inline-flex justify-center p-1 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
-                                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <path fill-rule="evenodd"
-                                        d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
-                                        clip-rule="evenodd"></path>
-                                </svg>
-                            </a>
-                            <a href="#"
-                                class="inline-flex justify-center p-1 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
-                                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <path
-                                        d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z">
-                                    </path>
-                                </svg>
-                            </a>
                         </div>
                     </div>
-                </div>
-                <button id="createProductButton"
-                    class="text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800"
-                    type="button" data-drawer-target="drawer-create-product-default"
-                    data-drawer-show="drawer-create-product-default" aria-controls="drawer-create-product-default"
-                    data-drawer-placement="right">
-                    Add new product
-                </button>
+                @endforeach
             </div>
+            <!-- If we need pagination -->
+            <div class="swiper-pagination"></div>
         </div>
-    </div>
+    </section>
 
-    <div class="flex flex-col">
-        <div class="overflow-x-auto">
-            <div class="inline-block min-w-full align-middle">
-                <div class="overflow-hidden shadow">
-                    <table class="min-w-full divide-y divide-gray-200 table-fixed dark:divide-gray-600">
-                        <thead class="bg-gray-100 dark:bg-gray-700">
-                            <tr>
-                                <th scope="col" class="p-4">
-                                    <div class="flex items-center">
-                                        <input id="checkbox-all" aria-describedby="checkbox-1" type="checkbox"
-                                            class="w-4 h-4 border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:focus:ring-primary-600 dark:ring-offset-gray-800 dark:bg-gray-700 dark:border-gray-600">
-                                        <label for="checkbox-all" class="sr-only">checkbox</label>
-                                    </div>
-                                </th>
-                                <th scope="col"
-                                    class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
-                                    Product Name
-                                </th>
-                                <th scope="col"
-                                    class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
-                                    Technology
-                                </th>
-                                <th scope="col"
-                                    class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
-                                    Description
-                                </th>
-                                <th scope="col"
-                                    class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
-                                    ID
-                                </th>
-                                <th scope="col"
-                                    class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
-                                    Price
-                                </th>
-                                <th scope="col"
-                                    class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
-                                    Discount
-                                </th>
-                                <th scope="col"
-                                    class="p-4 text-xs font-medium text-left text-gray-500 uppercase dark:text-gray-400">
-                                    Actions
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody class="bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700">
-                            <tr class="hover:bg-gray-100 dark:hover:bg-gray-700">
-                                <td class="w-4 p-4">
-                                    <div class="flex items-center">
-                                        <input id="checkbox-id" aria-describedby="checkbox-1" type="checkbox"
-                                            class="w-4 h-4 border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:focus:ring-primary-600 dark:ring-offset-gray-800 dark:bg-gray-700 dark:border-gray-600">
-                                        <label for="checkbox-id" class="sr-only">checkbox</label>
-                                    </div>
-                                </td>
-                                <td class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap dark:text-gray-400">
-                                    <div class="text-base font-semibold text-gray-900 dark:text-white">name</div>
-                                    <div class="text-sm font-normal text-gray-500 dark:text-gray-400">category</div>
-                                </td>
-                                <td class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                    technology</td>
-                                <td
-                                    class="max-w-sm p-4 overflow-hidden text-base font-normal text-gray-500 truncate xl:max-w-xs dark:text-gray-400">
-                                    description</td>
-                                <td class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white">#id
-                                </td>
-                                <td class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white">price
-                                </td>
-                                <td class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                    discount</td>
-
-                                <td class="p-4 space-x-2 whitespace-nowrap">
-                                    <button type="button" id="updateProductButton"
-                                        data-drawer-target="drawer-update-product-default"
-                                        data-drawer-show="drawer-update-product-default"
-                                        aria-controls="drawer-update-product-default" data-drawer-placement="right"
-                                        class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
-                                        <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20"
-                                            xmlns="http://www.w3.org/2000/svg">
-                                            <path
-                                                d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z">
-                                            </path>
-                                            <path fill-rule="evenodd"
-                                                d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"
-                                                clip-rule="evenodd"></path>
-                                        </svg>
-                                        Update
-                                    </button>
-                                    <button type="button" id="deleteProductButton"
-                                        data-drawer-target="drawer-delete-product-default"
-                                        data-drawer-show="drawer-delete-product-default"
-                                        aria-controls="drawer-delete-product-default" data-drawer-placement="right"
-                                        class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-red-700 rounded-lg hover:bg-red-800 focus:ring-4 focus:ring-red-300 dark:focus:ring-red-900">
-                                        <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20"
-                                            xmlns="http://www.w3.org/2000/svg">
-                                            <path fill-rule="evenodd"
-                                                d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
-                                                clip-rule="evenodd"></path>
-                                        </svg>
-                                        Delete item
-                                    </button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+    <!-- Just Release Section -->
+    <section class="p-5 py-5 bg-white dark:bg-gray-900">
+        <p class="text-2xl font-bold text-gray-800 dark:text-white py-5">
+            Just Release
+        </p>
+        <div class="swiper just-release-swiper">
+            <div class="swiper-wrapper">
+                @foreach ($movies->sortByDesc('release_date')->take(20) as $movie)
+                    <div class="swiper-slide">
+                        <a href="{{ url('movies/' . $movie->slug) }}">
+                            <img src="{{ $movie->poster_url }}" alt="{{ $movie->title }}" />
+                            <div class="movie-info absolute left-0 bottom-0 right-0 p-3 text-white"
+                                style="background: linear-gradient(to top, black, transparent)">
+                                <p class="font-bold truncate text-lg">{{ $movie->title }}</p>
+                                <p class="text-sm mb-4">&#9733; {{ $movie->rating }} | {{ $movie->genres->first()->name }}
+                                    - {{ $movie->type }}
+                                </p>
+                            </div>
+                        </a>
+                    </div>
+                @endforeach
             </div>
-        </div>
-    </div>
+            <!-- <div class="swiper-pagination"></div> -->
 
-    {{-- Pagination --}}
-    <div
-        class="sticky bottom-0 right-0 items-center w-full p-4 bg-white border-t border-gray-200 sm:flex sm:justify-between dark:bg-gray-800 dark:border-gray-700">
-        <div class="flex items-center mb-4 sm:mb-0">
-            <a href="#"
-                class="inline-flex justify-center p-1 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white">
-                <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                    <path fill-rule="evenodd"
-                        d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
-                        clip-rule="evenodd"></path>
-                </svg>
-            </a>
-            <a href="#"
-                class="inline-flex justify-center p-1 mr-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white">
-                <svg class="w-7 h-7" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                    <path fill-rule="evenodd"
-                        d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                        clip-rule="evenodd"></path>
-                </svg>
-            </a>
-            <span class="text-sm font-normal text-gray-500 dark:text-gray-400">Showing <span
-                    class="font-semibold text-gray-900 dark:text-white">1-20</span> of <span
-                    class="font-semibold text-gray-900 dark:text-white">2290</span></span>
+            <!-- Add Arrows -->
+            <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div>
         </div>
-        <div class="flex items-center space-x-3">
-            <a href="#"
-                class="inline-flex items-center justify-center flex-1 px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
-                <svg class="w-5 h-5 mr-1 -ml-1"" fill="currentColor" viewBox="0 0 20 20"
-                    xmlns="http://www.w3.org/2000/svg">
-                    <path fill-rule="evenodd"
-                        d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
-                        clip-rule="evenodd"></path>
-                </svg>
-                Previous
-            </a>
-            <a href="#"
-                class="inline-flex items-center justify-center flex-1 px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
-                Next
-                <svg class="w-5 h-5 ml-1 -mr-1" fill="currentColor" viewBox="0 0 20 20"
-                    xmlns="http://www.w3.org/2000/svg">
-                    <path fill-rule="evenodd"
-                        d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                        clip-rule="evenodd"></path>
-                </svg>
-            </a>
-        </div>
-    </div>
+    </section>
 
-    <!-- Edit Product Drawer -->
-    <div id="drawer-update-product-default"
-        class="fixed top-0 right-0 z-40 w-full h-screen max-w-xs p-4 overflow-y-auto transition-transform translate-x-full bg-white dark:bg-gray-800"
-        tabindex="-1" aria-labelledby="drawer-label" aria-hidden="true">
-        <h5 id="drawer-label"
-            class="inline-flex items-center mb-6 text-sm font-semibold text-gray-500 uppercase dark:text-gray-400">Update
-            Product</h5>
-        <button type="button" data-drawer-dismiss="drawer-update-product-default"
-            aria-controls="drawer-update-product-default"
-            class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 absolute top-2.5 right-2.5 inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white">
-            <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
-                xmlns="http://www.w3.org/2000/svg">
-                <path fill-rule="evenodd"
-                    d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                    clip-rule="evenodd"></path>
-            </svg>
-            <span class="sr-only">Close menu</span>
-        </button>
-        <form action="#">
-            <div class="space-y-4">
-                <div>
-                    <label for="name"
-                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Name</label>
-                    <input type="text" name="title" id="name"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                        value="Education Dashboard" placeholder="Type product name" required="">
-                </div>
-                <div>
-                    <label for="category"
-                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Technology</label>
-                    <select id="category"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
-                        <option selected="">Flowbite</option>
-                        <option value="RE">React</option>
-                        <option value="AN">Angular</option>
-                        <option value="VU">Vue JS</option>
-                    </select>
-                </div>
-                <div>
-                    <label for="price"
-                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Price</label>
-                    <input type="number" name="price" id="price"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                        value="2999" placeholder="$149" required="">
-                </div>
-                <div>
-                    <label for="description"
-                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description</label>
-                    <textarea id="description" rows="4"
-                        class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                        placeholder="Enter event description here">Start developing with an open-source library of over 450+ UI components, sections, and pages built with the utility classes from Tailwind CSS and designed in Figma.</textarea>
-                </div>
-                <div>
-                    <label for="discount"
-                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Discount</label>
-                    <select id="discount"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
-                        <option selected="">No</option>
-                        <option value="5">5%</option>
-                        <option value="10">10%</option>
-                        <option value="20">20%</option>
-                        <option value="30">30%</option>
-                        <option value="40">40%</option>
-                        <option value="50">50%</option>
-                    </select>
-                </div>
+    <!-- Popular of the week Section-->
+    <section class="p-5 py-5 bg-white dark:bg-gray-900">
+        <p class="text-2xl font-bold text-gray-700 dark:text-white py-5">
+            Popular of the Week
+        </p>
+        <div class="swiper popular-week-swiper">
+            <div class="swiper-wrapper">
+                @foreach ($movies->sortBy('rating')->sortBy('release_date')->take(20) as $movie)
+                    <div class="swiper-slide">
+                        <a href="{{ url('movies/' . $movie->slug) }}">
+                            <div class="flex">
+                                <p
+                                    class="counter text-center text-gray-700 dark:text-white justify-center flex items-center text-4xl p-5 font-bold">
+                                    {{-- iterator --}}
+                                    {{ $loop->iteration }}
+                                </p>
+                                <img src="{{ $movie->poster_url }}" alt="{{ $movie->title }}" />
+                                <div class="pl-5 text-gray-700 dark:text-white flex justify-between"
+                                    style="flex-direction: column">
+                                    <p class="age border rounded-md text-sm px-2 border-gray-500 text-gray-500"
+                                        style="width: fit-content">
+                                        {{ \Carbon\Carbon::parse($movie->release_date)->format('Y') }}
+                                    </p>
+                                    <p class="font-bold text-base">{{ $movie->title }}</p>
+                                    <p class="text-sm genre text-gray-500">
+                                    <p class="text-sm rating">
+                                        &#9733; {{ $movie->rating }} |
+                                        {{ $movie->genres->first()->name }}</p>
+                                    <span class="type text-gray-500"> {{ $movie->type }} </span>
+                                    </p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                @endforeach
+
             </div>
-            <div class="bottom-0 left-0 flex justify-center w-full pb-4 mt-4 space-x-4 sm:absolute sm:px-4 sm:mt-0">
-                <button type="submit"
-                    class="w-full justify-center text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
-                    Update
-                </button>
-                <button type="button"
-                    class="w-full justify-center text-red-600 inline-flex items-center hover:text-white border border-red-600 hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-900">
-                    <svg aria-hidden="true" class="w-5 h-5 mr-1 -ml-1" fill="currentColor" viewBox="0 0 20 20"
-                        xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd"
-                            d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
-                            clip-rule="evenodd"></path>
-                    </svg>
-                    Delete
-                </button>
-            </div>
-        </form>
-    </div>
+            <!-- <div class="swiper-pagination"></div> -->
 
+            <!-- Add Arrows -->
+            <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div>
+        </div>
+    </section>
 
-    <!-- Delete Product Drawer -->
-    <div id="drawer-delete-product-default"
-        class="fixed top-0 right-0 z-40 w-full h-screen max-w-xs p-4 overflow-y-auto transition-transform translate-x-full bg-white dark:bg-gray-800"
-        tabindex="-1" aria-labelledby="drawer-label" aria-hidden="true">
-        <h5 id="drawer-label"
-            class="inline-flex items-center text-sm font-semibold text-gray-500 uppercase dark:text-gray-400">Delete item
-        </h5>
-        <button type="button" data-drawer-dismiss="drawer-delete-product-default"
-            aria-controls="drawer-delete-product-default"
-            class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 absolute top-2.5 right-2.5 inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white">
-            <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
-                xmlns="http://www.w3.org/2000/svg">
-                <path fill-rule="evenodd"
-                    d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                    clip-rule="evenodd"></path>
-            </svg>
-            <span class="sr-only">Close menu</span>
-        </button>
-        <svg class="w-10 h-10 mt-8 mb-4 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-        </svg>
-        <h3 class="mb-6 text-lg text-gray-500 dark:text-gray-400">Are you sure you want to delete this product?</h3>
-        <a href="#"
-            class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm inline-flex items-center px-3 py-2.5 text-center mr-2 dark:focus:ring-red-900">
-            Yes, I'm sure
-        </a>
-        <a href="#"
-            class="text-gray-900 bg-white hover:bg-gray-100 focus:ring-4 focus:ring-primary-300 border border-gray-200 font-medium inline-flex items-center rounded-lg text-sm px-3 py-2.5 text-center dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-gray-700"
-            data-drawer-hide="drawer-delete-product-default">
-            No, cancel
-        </a>
-    </div>
+    <!-- Featured Section -->
+    <section class="p-5 py-5 flex md:flex-nowrap flex-wrap-reverse featured-section" style="position: relative;">
+        <div class="featured-section-info flex-col justify-center flex md:w-1/2 w-ful md:p-5 z-10">
+            <p class="text-2xl font-bold text-gray-800 dark:text-white py-5">
+                Featured in Sineflix
+            </p>
+            <p class="text-white mb-5">Best featured for you today</p>
+            <div class="featured-description" style="height: inherit">
+                {{-- <p class="tag-badge rounded-full bg-gray-700 text-white p-1 px-3 font-bold" style="width: fit-content">
+                    #1 in Australia
+                </p> --}}
+                <p class="text-lg md:text-4xl featured-title text-white py-2 font-bold">
 
-
-    <!-- Add Product Drawer -->
-    <div id="drawer-create-product-default"
-        class="fixed top-0 right-0 z-40 w-full h-screen max-w-xs p-4 overflow-y-auto transition-transform translate-x-full bg-white dark:bg-gray-800"
-        tabindex="-1" aria-labelledby="drawer-label" aria-hidden="true">
-        <h5 id="drawer-label"
-            class="inline-flex items-center mb-6 text-sm font-semibold text-gray-500 uppercase dark:text-gray-400">New
-            Product</h5>
-        <button type="button" data-drawer-dismiss="drawer-create-product-default"
-            aria-controls="drawer-create-product-default"
-            class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 absolute top-2.5 right-2.5 inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white">
-            <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
-                xmlns="http://www.w3.org/2000/svg">
-                <path fill-rule="evenodd"
-                    d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                    clip-rule="evenodd"></path>
-            </svg>
-            <span class="sr-only">Close menu</span>
-        </button>
-        <form action="#">
-            <div class="space-y-4">
-                <div>
-                    <label for="name"
-                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Name</label>
-                    <input type="text" name="title" id="name"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                        placeholder="Type product name" required="">
-                </div>
-
-                <div>
-                    <label for="price"
-                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Price</label>
-                    <input type="number" name="price" id="price"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                        placeholder="$2999" required="">
-                </div>
-                <div>
-                    <label for="category-create"
-                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Technology</label>
-                    <select id="category-create"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
-                        <option selected="">Select category</option>
-                        <option value="FL">Flowbite</option>
-                        <option value="RE">React</option>
-                        <option value="AN">Angular</option>
-                        <option value="VU">Vue</option>
-                    </select>
-                </div>
-                <div>
-                    <label for="description"
-                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description</label>
-                    <textarea id="description" rows="4"
-                        class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                        placeholder="Enter event description here"></textarea>
-                </div>
-                <div>
-                    <label for="discount-create"
-                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Discount</label>
-                    <select id="discount-create"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
-                        <option selected="">No</option>
-                        <option value="5">5%</option>
-                        <option value="10">10%</option>
-                        <option value="20">20%</option>
-                        <option value="30">30%</option>
-                        <option value="40">40%</option>
-                        <option value="50">50%</option>
-                    </select>
-                </div>
-                <div class="bottom-0 left-0 flex justify-center w-full pb-4 space-x-4 md:px-4 md:absolute">
-                    <button type="submit"
-                        class="text-white w-full justify-center bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
-                        Add product
-                    </button>
-                    <button type="button" data-drawer-dismiss="drawer-create-product-default"
-                        aria-controls="drawer-create-product-default"
-                        class="inline-flex w-full justify-center text-gray-500 items-center bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-primary-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">
-                        <svg aria-hidden="true" class="w-5 h-5 -ml-1 sm:mr-1" fill="none" stroke="currentColor"
-                            viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M6 18L18 6M6 6l12 12"></path>
+                </p>
+                <p class="featured-info text-white">
+                    <span class="text-white"> &#9733; <span class="featured-rating"></span> | </span>
+                    <span class="featured-duration"></span>
+                    <span class="featured-year"></span> <span> - </span>
+                    <span class="featured-genre"></span>
+                </p>
+                <p class="featured-plot text-gray-300 py-2">
+                </p>
+                <div class="block md:flex md:space-x-4 mb-8">
+                    <a href="" id="trailer-link"
+                        class="inline-flex items-center justify-center whitespace-nowrap text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-bold rounded-lg text-sm me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 h-10 px-4 py-2">
+                        <svg class="w-6 h-6 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                            width="24" height="24" fill="none" viewBox="0 0 24 24">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M8 18V6l8 6-8 6Z" />
                         </svg>
-                        Cancel
+
+                        Watch Trailer
+                    </a>
+                    <button id="watchlist-button"
+                        class="toggle-watchlist-btn inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-bold text-white hover:text-white border hover:bg-blue-800 border-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 text-center me-2 mb-2 dark:border-blue-500 dark:text-white dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800 h-10 px-4 py-2"
+                        data-movie-id="" data-in-watchlist="">
+                        <svg class="w-6 h-6 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                            width="24" height="24" fill="none" viewBox="0 0 24 24">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="m17 21-5-4-5 4V3.889a.92.92 0 0 1 .244-.629.808.808 0 0 1 .59-.26h8.333a.81.81 0 0 1 .589.26.92.92 0 0 1 .244.63V21Z" />
+                        </svg>
+                        Add Watchlist
                     </button>
                 </div>
-        </form>
-    </div>
+            </div>
+        </div>
+        <div class="swiper featured-swiper text-white">
+            <div class="swiper-wrapper">
+                @foreach ($movies as $movie)
+                    @php
+                        $isInWatchlist = in_array($movie->id, $watchlist);
+                    @endphp
+                    <div class="swiper-slide" data-id="{{ $movie->id }}" data-title="{{ $movie->title }}"
+                        data-rating="{{ $movie->rating }}" data-plot="{{ $movie->plot_summary }}"
+                        data-slug="{{ $movie->slug }}" data-duration="{{ $movie->duration }}"
+                        data-genre="{{ $movie->genres->first()->name }}" data-type="{{ $movie->type }}"
+                        data-releasedate="{{ $movie->release_date }}"
+                        data-in-watchlist="{{ $isInWatchlist ? 'true' : 'false' }}">
+                        <a href="#">
+                            <img src="{{ $movie->poster_url }}" alt="" />
+                            <div class="movie-info absolute left-0 bottom-0 right-0 p-3 text-white"
+                                style="background: linear-gradient(to top, black, transparent)">
+                                <p class="font-bold text-lg">{{ $movie->title }}</p>
+                                <p class="text-sm mb-4">&#9733; {{ $movie->rating }} |
+                                    {{ $movie->genres->first()->name }} - {{ $movie->type }}</p>
+                            </div>
+                        </a>
+                    </div>
+                @endforeach
+            </div>
+            <!-- <div class="swiper-pagination"></div> -->
+
+            <!-- Add Arrows -->
+            <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div>
+        </div>
+    </section>
+
+    <!-- Movies Section -->
+    <section class="p-5 py-5 bg-white dark:bg-gray-900">
+        <p class="text-2xl font-bold text-gray-800 dark:text-white py-5">
+            Movies
+        </p>
+        <div class="swiper movies-swiper">
+            <div class="swiper-wrapper">
+                @foreach ($movies->take(20) as $movie)
+                    @if ($movie->type == 'MOVIE')
+                        <div class="swiper-slide">
+                            <a href="{{ url('movies/' . $movie->slug) }}">
+                                <img src="{{ $movie->poster_url }}" alt="{{ $movie->title }}" />
+                                <p class="font-bold truncate movie-title text-lg text-gray-800 dark:text-white">
+                                    {{ $movie->title }}
+                                </p>
+                                <p class="text-sm rating text-gray-800 dark:text-white">
+                                    &#9733; {{ $movie->rating }} |
+                                    <span class="genre text-gray-500"> {{ $movie->genres->first()->name }} </span>
+                                    <span class="type text-gray-500"> - {{ $movie->type }} </span>
+                                </p>
+                            </a>
+                        </div>
+                    @endif
+                @endforeach
+            </div>
+            <!-- <div class="swiper-pagination"></div> -->
+
+            <!-- Add Arrows -->
+            <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div>
+        </div>
+
+        {{-- Link load more --}}
+        <div class="flex justify-center mt-5">
+            <a href="{{ url('movies/type/MOVIE') }}"
+                class="inline-flex items-center justify-center whitespace-nowrap text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-bold rounded-lg text-sm me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 h-10 px-4 py-2">
+                View All Movies
+            </a>
+        </div>
+
+    </section>
+
+    <!-- Series Section -->
+    <section class="p-5 py-5 bg-white dark:bg-gray-900">
+        <p class="text-2xl font-bold text-gray-800 dark:text-white py-5">
+            Series
+        </p>
+        <div class="swiper series-swiper">
+            <div class="swiper-wrapper">
+                @foreach ($movies->take(20) as $movie)
+                    @if ($movie->type == 'SERIES')
+                        <div class="swiper-slide">
+                            <a href="{{ url('movies/' . $movie->slug) }}">
+                                <img src="{{ $movie->poster_url }}" alt="{{ $movie->title }}" />
+                                <p class="font-bold truncate movie-title text-lg text-gray-800 dark:text-white">
+                                    {{ $movie->title }}
+                                </p>
+                                <p class="text-sm rating text-gray-800 dark:text-white">
+                                    &#9733; {{ $movie->rating }} |
+                                    <span class="genre text-gray-500"> {{ $movie->genres->first()->name }} </span>
+                                    <span class="type text-gray-500"> - {{ $movie->type }} </span>
+                                </p>
+                            </a>
+                        </div>
+                    @endif
+                @endforeach
+            </div>
+            <!-- <div class="swiper-pagination"></div> -->
+
+            <!-- Add Arrows -->
+            <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div>
+        </div>
+
+        {{-- Link load more --}}
+        <div class="flex justify-center mt-5">
+            <a href="{{ url('movies/type/SERIES') }}"
+                class="inline-flex items-center justify-center whitespace-nowrap text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-bold rounded-lg text-sm me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 h-10 px-4 py-2">
+                View All Movies
+            </a>
+        </div>
+
+    </section>
+
+    <!-- Korean Series Section -->
+    <section class="p-5 py-5 bg-white dark:bg-gray-900">
+        <p class="text-2xl font-bold text-gray-800 dark:text-white py-5">
+            Korean Series
+        </p>
+        <div class="swiper korean-series-swiper">
+            <div class="swiper-wrapper">
+                @foreach ($movies->take(20) as $movie)
+                    @if ($movie->type == 'K-SERIES')
+                        <div class="swiper-slide">
+                            <a href="{{ url('movies/' . $movie->slug) }}">
+                                <img src="{{ $movie->poster_url }}" alt="{{ $movie->title }}" />
+                                <p class="font-bold truncate movie-title text-lg text-gray-800 dark:text-white">
+                                    {{ $movie->title }}
+                                </p>
+                                <p class="text-sm rating text-gray-800 dark:text-white">
+                                    &#9733; {{ $movie->rating }} |
+                                    <span class="genre text-gray-500"> {{ $movie->genres->first()->name }} </span>
+                                    <span class="type text-gray-500"> - {{ $movie->type }} </span>
+                                </p>
+                            </a>
+                        </div>
+                    @endif
+                @endforeach
+            </div>
+            <!-- <div class="swiper-pagination"></div> -->
+
+            <!-- Add Arrows -->
+            <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div>
+        </div>
+
+        {{-- Link load more --}}
+        <div class="flex justify-center mt-5">
+            <a href="{{ url('movies/type/K-SERIES') }}"
+                class="inline-flex items-center justify-center whitespace-nowrap text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-bold rounded-lg text-sm me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 h-10 px-4 py-2">
+                View All Movies
+            </a>
+        </div>
+
+    </section>
+
+    <!-- Choose Genre -->
+    <section class="p-5 py-5 bg-white dark:bg-gray-900">
+        <p class="text-2xl font-bold text-gray-800 dark:text-white py-5">
+            Select Your Genres
+        </p>
+        <div class="flex gap-8 flex-wrap justify-center bg-white dark:bg-gray-900">
+            @foreach ($genres as $genre)
+                <a href="{{ url('movies/genre/' . strtolower($genre->name)) }}"
+                    class="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700 justify-center"
+                    style="width: 250px">
+                    <div class="flex flex-col justify-center p-4">
+                        <h4 class="mb-2 text-4xl font-bold tracking-tight text-gray-900 dark:text-white">
+                            {{ $genre->name }}</h4>
+                        <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">{{ $genre->movies_count }} Movies
+                        </p>
+                    </div>
+                </a>
+            @endforeach
+        </div>
+
+    </section>
 @endsection

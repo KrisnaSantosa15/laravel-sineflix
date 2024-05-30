@@ -2,14 +2,25 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\MovieController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AdminGenreController;
 use App\Http\Controllers\AdminStarsController;
 use App\Http\Controllers\AdminMovieController;
+use App\Http\Controllers\WatchlistController;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [MovieController::class, 'index'])->name('movies.index');
+Route::get('/movies/{movie:slug}', [MovieController::class, 'show'])->name('movies.show');
+// movies type
+Route::get('/movies/type/{movie:type}', [MovieController::class, 'type'])->name('movies.type');
+// movies genre
+Route::get('/movies/genre/{genre:slug}', [MovieController::class, 'genre'])->name('movies.genre');
+
+// Watchlist
+Route::post('/toggle-watchlist', [WatchlistController::class, 'toggle'])->name('watchlist.toggle');
+Route::delete('/watchlist/{watchlist:id}', [WatchlistController::class, 'delete'])->name('watchlist.remove');
+Route::get('/watchlist', [WatchlistController::class, 'index'])->name('watchlist.index');
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -20,6 +31,7 @@ Route::middleware(['auth', 'member'])->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
 
 // Admin Routes
 Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'admin']], function () {

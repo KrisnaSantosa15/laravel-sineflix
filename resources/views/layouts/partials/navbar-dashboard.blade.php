@@ -18,9 +18,9 @@
                     </svg>
                 </button>
                 <a href="{{ url('/') }}" class="flex ml-2 md:mr-24">
-                    <img src="/images/logo.svg" class="h-8 mr-3" alt="FlowBite Logo" />
+                    <img src="https://flowbite.com/docs/images/logo.svg" class="h-8 mr-3" alt="Sinelix Logo" />
                     <span
-                        class="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">Flowbite</span>
+                        class="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">Sineflix</span>
                 </a>
                 <form action="#" method="GET" class="hidden lg:block lg:pl-3.5">
                     <label for="topbar-search" class="sr-only">Search</label>
@@ -347,10 +347,11 @@
                             id="user-menu-button-2" aria-expanded="false" data-dropdown-toggle="dropdown-2">
                             <span class="sr-only">Open user menu</span>
                             @if (auth()->check() && !empty(auth()->user()->image))
-                                <img class="w-8 h-8 rounded-full" src="{{ auth()->user()->image }}" alt="user photo">
+                                <img class="w-8 h-8 rounded-full" src="{{ auth()->user()->image }}"
+                                    alt="{{ auth()->user()->name }}">
                             @else
                                 <img class="w-8 h-8 rounded-full" src="/images/profile-placeholder.jpg"
-                                    alt="user photo">
+                                    alt="{{ auth()->user()->name }}">
                             @endif
                         </button>
                     </div>
