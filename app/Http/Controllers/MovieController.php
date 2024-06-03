@@ -7,6 +7,7 @@ use App\Models\Movie;
 use App\Models\Genre;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Watchlist;
+use Illuminate\Support\Facades\DB;
 
 class MovieController extends Controller
 {
@@ -22,7 +23,10 @@ class MovieController extends Controller
 
     public function show(Movie $movie)
     {
-        return view('movies.show', compact('movie'));
+        $watchlist = Watchlist::where('user_id', Auth::id())->pluck('movie_id')->toArray();
+        // avg rating
+        $averageRating = DB::select('SELECT GetAverageRating(?) AS avg_rating', [$movie->id]);
+        return view('movies.show', compact('movie', 'watchlist', 'averageRating'));
     }
 
     public function type($type)
@@ -52,5 +56,18 @@ class MovieController extends Controller
         $genres = Genre::withCount('movies')->get();
 
         return view('movies.search', compact('movies', 'genres', 'search'));
+    }
+
+    // search ajax
+    public function searchAjax(Request $request)
+    {
+        $request->validate([
+            'search' => 'required'
+        ]);
+
+        $search = $request->search;
+        $movies = Movie::where('title', 'like', '%' . $search . '%')->get();
+
+        return response()->json(['movies' => $movies]);
     }
 }

@@ -57,7 +57,7 @@
                         data-dropdown-placement="bottom">
                         <span class="sr-only">Open user menu</span>
                         @if (auth()->check() && !empty(auth()->user()->image))
-                            <img class="w-8 h-8 rounded-full" src="{{ auth()->user()->image }}"
+                            <img class="w-8 h-8 rounded-full" src="/images/users/{{ auth()->user()->image }}"
                                 alt="{{ auth()->user()->name }}">
                         @else
                             <img class="w-8 h-8 rounded-full" src="/images/profile-placeholder.jpg"
@@ -229,23 +229,10 @@
             <!-- Modal body -->
             <div class="p-4 md:p-5">
                 <p class="text-sm font-normal text-gray-500 dark:text-gray-400">
-                    Search movies, series, actors, directors, and more...
+                    Search movies, series, k-series, and more... by typing the title
                 </p>
-                <ul class="my-4 space-y-3">
-                    <li>
-                        <a href="#"
-                            class="flex items-center p-3 text-base font-bold text-gray-900 rounded-lg bg-gray-50 hover:bg-gray-100 group hover:shadow dark:bg-gray-600 dark:hover:bg-gray-500 dark:text-white">
-                            <span class="flex-1 ms-3 whitespace-nowrap">IronMan</span>
-                            <span
-                                class="inline-flex items-center justify-center px-2 py-0.5 ms-3 text-xs font-medium text-gray-500 bg-gray-200 rounded dark:bg-gray-700 dark:text-gray-400">Popular</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#"
-                            class="flex items-center p-3 text-base font-bold text-gray-900 rounded-lg bg-gray-50 hover:bg-gray-100 group hover:shadow dark:bg-gray-600 dark:hover:bg-gray-500 dark:text-white">
-                            <span class="flex-1 ms-3 whitespace-nowrap">Spiderman</span>
-                        </a>
-                    </li>
+                <ul class="my-4 space-y-3" id="search-results">
+                    <!-- Search results will be appended here by jQuery -->
                 </ul>
                 <div>
                     <a href="#"

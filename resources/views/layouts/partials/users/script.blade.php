@@ -181,7 +181,7 @@
         // let activeIndex = featuredSwiper.realIndex; // Use realIndex to get the original index
         // let featuredActiveSlide = document.querySelectorAll(".featured-swiper .swiper-slide")[activeIndex];
         let featuredActiveSlide = document.querySelector(".featured-swiper .swiper-slide-active");
-        let activeSlideImage = featuredActiveSlide.querySelector("img");
+        let activeSlideImage = featuredActiveSlide?.querySelector("img");
 
         if (featuredActiveSlide && activeSlideImage) {
             document.querySelector(".featured-section").style.backgroundImage = "url(" + activeSlideImage.getAttribute(
@@ -271,6 +271,42 @@
                     // Handle error, show a message to the user, etc.
                 }
             });
+        });
+    });
+</script>
+<script>
+    $(document).ready(function() {
+        $('#search-input-modal').on('keyup', function() {
+            let query = $(this).val();
+            if (query.length > 2) { // Start searching when the query is at least 3 characters
+                $.ajax({
+                    url: '{{ route('movies.search-ajax') }}',
+                    type: 'GET',
+                    data: {
+                        search: query
+                    },
+                    success: function(response) {
+                        let movies = response.movies;
+                        let searchResults = '';
+
+                        movies.forEach(movie => {
+                            searchResults += `<li>
+                            <a href="/movies/${movie.slug}"
+                                class="flex items-center p-3 text-base font-bold text-gray-900 rounded-lg bg-gray-50 hover:bg-gray-100 group hover:shadow dark:bg-gray-600 dark:hover:bg-gray-500 dark:text-white">
+                                <span class="flex-1 ms-3 whitespace-nowrap">${movie.title}</span>
+                            </a>
+                        </li>`;
+                        });
+
+                        $('#search-results').html(searchResults);
+                    },
+                    error: function(xhr) {
+                        console.error(xhr.responseText);
+                    }
+                });
+            } else {
+                $('#search-results').html('');
+            }
         });
     });
 </script>

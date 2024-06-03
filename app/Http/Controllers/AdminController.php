@@ -49,7 +49,9 @@ class AdminController extends Controller
     // Admin Profile
     public function profile()
     {
-        return view('admin.profile');
+        // Get the authenticated user
+        $user = auth()->user();
+        return view('admin.profile', compact('user'));
     }
 
     // Admin Settings
@@ -63,7 +65,10 @@ class AdminController extends Controller
     {
         $users = AdminUser::when(request('keyword'), function ($query) {
             return $query->where('name', 'like', '%' . request('keyword') . '%');
-        })->paginate(2)->withQueryString();
+        })
+            ->where('id', '!=', auth()->id())
+            ->paginate(2)
+            ->withQueryString();
 
         return view('admin.users.index', compact('users'));
     }

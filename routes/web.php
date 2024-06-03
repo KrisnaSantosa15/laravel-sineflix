@@ -8,6 +8,7 @@ use App\Http\Controllers\AdminGenreController;
 use App\Http\Controllers\AdminStarsController;
 use App\Http\Controllers\AdminMovieController;
 use App\Http\Controllers\WatchlistController;
+use App\Http\Controllers\ReviewController;
 
 Route::get('/', [MovieController::class, 'index'])->name('movies.index');
 Route::get('/movies/{movie:slug}', [MovieController::class, 'show'])->name('movies.show');
@@ -15,6 +16,16 @@ Route::get('/movies/{movie:slug}', [MovieController::class, 'show'])->name('movi
 Route::get('/movies/type/{movie:type}', [MovieController::class, 'type'])->name('movies.type');
 // movies genre
 Route::get('/movies/genre/{genre:slug}', [MovieController::class, 'genre'])->name('movies.genre');
+// search movies
+Route::get('/search', [MovieController::class, 'search'])->name('movies.search');
+// search ajax
+Route::get('/search-ajax', [MovieController::class, 'searchAjax'])->name('movies.search-ajax');
+
+// Reviews
+Route::middleware(['auth'])->group(function () {
+    Route::post('/reviews', [ReviewController::class, 'store'])->name('reviews.store');
+});
+
 
 // Watchlist
 Route::post('/toggle-watchlist', [WatchlistController::class, 'toggle'])->name('watchlist.toggle');
