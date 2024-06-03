@@ -5,6 +5,24 @@
         <p class="text-2xl font-bold text-gray-800 dark:text-white py-5">
             My Watchlist
         </p>
+        {{-- if not logged in, says login first to save your watchlist --}}
+        @guest
+            <p class="text-2xl text-center font-medium text-gray-800 dark:text-white py-5">
+                Your watchlist is empty. <a href="{{ url('login') }}"
+                    class="text-blue-500 dark:text-blue-300 hover:text-blue-700 dark:hover:text-blue-500">Login</a> to
+                save your watchlist.
+            </p>
+        @endguest
+        {{-- if logged in but watchlist is empty --}}
+        @auth
+            @if (count($myWatchlist) == 0)
+                <p class="text-2xl text-center font-medium text-gray-800 dark:text-white py-5">
+                    Your watchlist is empty. <a href="{{ url('movies') }}"
+                        class="text-blue-500 dark:text-blue-300 hover:text-blue-700 dark:hover:text-blue-500">Browse
+                        movies</a> to add to your watchlist.
+                </p>
+            @endif
+        @endauth
         <div class="swiper series-swiper">
             <div class="swiper-wrapper">
                 @foreach ($myWatchlist as $movie)

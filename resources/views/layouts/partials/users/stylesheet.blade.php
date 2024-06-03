@@ -117,6 +117,10 @@
         /* Make sure the overlay does not interfere with interactions */
     }
 
+    .featured-section-info {
+        width: 100%;
+    }
+
 
     /* Movies swiper */
     .movies-swiper {

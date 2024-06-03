@@ -12,6 +12,10 @@ return new class extends Migration
      */
     public function up(): void
     {
+        // Drop the function if it exists
+        DB::unprepared('DROP FUNCTION IF EXISTS GetAverageRating');
+
+        // Create the function
         DB::unprepared('
         CREATE FUNCTION GetAverageRating(movieId INT) RETURNS DECIMAL(3, 1)
         DETERMINISTIC

@@ -12,6 +12,10 @@ return new class extends Migration
      */
     public function up(): void
     {
+        // Drop the view if it exists
+        DB::unprepared('DROP VIEW IF EXISTS UserWatchlist');
+
+        // Create the view
         DB::unprepared('
             CREATE VIEW UserWatchlist AS
             SELECT
@@ -25,14 +29,13 @@ return new class extends Migration
                 m.poster_url,
                 m.rating,
                 m.release_date,
-                m.id,
                 GROUP_CONCAT(g.name) AS genres
             FROM users u
             JOIN watchlists w ON u.id = w.user_id
             JOIN movies m ON w.movie_id = m.id
             JOIN genre_movie gm ON m.id = gm.movie_id
             JOIN genres g ON gm.genre_id = g.id
-            GROUP BY u.id, w.movie_id, w.id;
+            GROUP BY u.id, w.movie_id, w.id, m.title, m.slug, m.poster_url, m.rating, m.release_date;
         ');
     }
 

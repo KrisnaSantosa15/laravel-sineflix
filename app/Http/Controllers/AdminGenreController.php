@@ -34,6 +34,12 @@ class AdminGenreController extends Controller
      */
     public function store(Request $request)
     {
+
+        // Validate request
+        $request->validate([
+            'name' => 'required|unique:genres',
+        ]);
+
         // Store genre with slug generated from name
         $request['slug'] = Str::slug($request->name);
         AdminGenre::create($request->all());

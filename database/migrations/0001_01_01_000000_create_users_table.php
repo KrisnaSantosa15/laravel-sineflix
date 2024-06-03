@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
 
 return new class extends Migration
 {
@@ -12,7 +13,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('users', function (Blueprint $table) {
-            $table->id();
+            $table->id()->autoIncrement();
             $table->string('name');
             $table->string('email')->unique();
             $table->string('username')->unique()->nullable();
@@ -38,6 +39,13 @@ return new class extends Migration
             $table->longText('payload');
             $table->integer('last_activity')->index();
         });
+
+
+        // Dummy data
+        DB::table('users')->insert([
+            ['name' => 'Admin', 'email' => 'admin@gmail.com', 'username' => 'admin', 'role' => 'ADMIN', 'password' => bcrypt('admin123'), 'created_at' => now(), 'updated_at' => now()],
+            ['name' => 'Member', 'email' => 'member@gmail.com', 'username' => 'member', 'role' => 'MEMBER', 'password' => bcrypt('member123'), 'created_at' => now(), 'updated_at' => now()],
+        ]);
     }
 
     /**
