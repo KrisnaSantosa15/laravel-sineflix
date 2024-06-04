@@ -16,4 +16,13 @@ class LogActivity extends Model
         'description',
         'action_date',
     ];
+
+    protected $casts = [
+        'action_date' => 'datetime',
+    ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

@@ -62,4 +62,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Review::class);
     }
+
+    public function logActivities()
+    {
+        return $this->hasMany(LogActivity::class);
+    }
 }

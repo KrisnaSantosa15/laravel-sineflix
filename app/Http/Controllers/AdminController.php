@@ -5,12 +5,15 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User as AdminUser;
 use Illuminate\Support\Facades\DB;
+use App\Models\LogActivity;
 
 class AdminController extends Controller
 {
     public function index()
     {
-        return view('admin.dashboard');
+        // get latest 10 log activities
+        $logActivities = LogActivity::latest()->take(10)->get();
+        return view('admin.dashboard', compact('logActivities'));
     }
 
     // Admin Login

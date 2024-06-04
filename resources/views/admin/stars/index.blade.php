@@ -301,7 +301,7 @@
 
     </div>
 
-    <!-- Main modal -->
+    <!-- View modal -->
     @foreach ($stars as $star)
         <div id="modal-view-star-{{ $star->slug }}" tabindex="-1" aria-hidden="true"
             class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
@@ -327,7 +327,7 @@
                     <!-- Modal body -->
                     <div class="p-4 md:p-5 space-y-4">
                         <div class="flex items-center space-x-4">
-                            <div style="width: 50%; height: 50%;">
+                            <div class="w-1/5">
                                 @if (!empty($star->image))
                                     <img src="{{ asset('images/stars/' . $star->image) }}" alt="{{ $star->name }}"
                                         class="w-full h-full rounded-md">
@@ -336,7 +336,7 @@
                                         class="w-full h-full rounded-md">
                                 @endif
                             </div>
-                            <div class="space-y-1">
+                            <div class="space-y-1 w-4/5">
                                 <h4 class="text-lg font-semibold text-gray-900 dark:text-white">
                                     {{ $star->name }}
                                 </h4>

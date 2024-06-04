@@ -529,7 +529,7 @@
     @foreach ($movies as $movie)
         <div id="modal-view-movie-{{ $movie->slug }}" tabindex="-1" aria-hidden="true"
             class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
-            <div class="relative p-4 w-full max-w-2xl max-h-full">
+            <div class="relative w-full max-w-4xl max-h-full">
                 <!-- Modal content -->
                 <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
                     <!-- Modal header -->
@@ -550,7 +550,47 @@
                     </div>
                     <!-- Modal body -->
                     <div class="p-4 md:p-5 space-y-4 whitespace-normal" style="overflow-wrap: anywhere">
-                        <div class="grid gap-4 grid-cols-6">
+                        <div class="block md:flex">
+                            <div class="w-full md:w-1/4 justify-center flex py-3">
+                                <img src="{{ $movie->poster_url }}" alt="{{ $movie->title }}"
+                                    class="w-1/2 md:w-full h-auto rounded-md">
+                            </div>
+                            <div class="w-full md:w-2/4 md:pl-5">
+                                <h1 class="text-3xl font-bold text-gray-800 dark:text-white">{{ $movie->title }}</h1>
+                                {{-- Youtube Embed --}}
+                                {{-- change watch: https://www.youtube.com/watch?v=_pK1lKnV5XU, to embed: https://www.youtube.com/embed/_pK1lKnV5XU --}}
+                                <div class="video-container py-3 flex justify-center">
+                                    <div class="video-container w-5/6 h-auto max-w-full">
+                                        <div class="aspect-video">
+                                            <iframe class="aspect-video w-full"
+                                                src="{{ str_replace('watch?v=', 'embed/', $movie->trailer_url) }}"
+                                                title="{{ $movie->title }}" frameborder="0"
+                                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                                allowfullscreen class="w-full h-full"></iframe>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p class="text-gray-800 dark:text-white uppercase font-bold">Storyline</p>
+                                <p class="text-lg text-gray-500">{{ $movie->plot_summary }}</p>
+                                <p class="text-lg text-gray-500">{{ $movie->duration }}</p>
+                            </div>
+                            <div class="w-full md:w-1/4 py-3">
+                                <div class="row mr-5">
+                                    <p class="text-lg text-gray-500">Rating: <span class="dark:text-white">
+                                            {{ $movie->rating }} </span>
+                                    </p>
+                                    <p class="text-lg text-gray-500">Type: <span class="dark:text-white">
+                                            {{ $movie->type }} </span> </p>
+                                    <p class="text-lg text-gray-500">Director: <span
+                                            class="dark:text-white">{{ $movie->director }}</span>
+                                    </p>
+                                    <p class="text-lg text-gray-500">Genres: <span class="dark:text-white">
+                                            {{ $movie->genres->pluck('name')->implode(', ') }} </span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        {{-- <div class="grid gap-4 grid-cols-6">
                             <div class="col-span-6">
                                 <label for="title"
                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Title</label>
@@ -613,7 +653,7 @@
                                     Summary</label>
                                 <p class="text-gray-900 dark:text-white">{{ $movie->plot_summary }}</p>
                             </div>
-                        </div>
+                        </div> --}}
                     </div>
                     <!-- Modal footer -->
                     <div class="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">

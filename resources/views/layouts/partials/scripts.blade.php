@@ -26,3 +26,21 @@
         document.getElementById('alert-warning')?.remove();
     }, 5000);
 </script>
+{{-- Password visibility toggle --}}
+<script>
+    function togglePasswordVisibility(elementId, showIconId = 'show-icon', hideIconId = 'hide-icon') {
+        const passwordInput = document.getElementById(elementId);
+        const showIcon = document.getElementById(showIconId);
+        const hideIcon = document.getElementById(hideIconId);
+
+        if (passwordInput.type === 'password') {
+            passwordInput.type = 'text';
+            showIcon.style.display = 'block';
+            hideIcon.style.display = 'none';
+        } else {
+            passwordInput.type = 'password';
+            showIcon.style.display = 'none';
+            hideIcon.style.display = 'block';
+        }
+    }
+</script>

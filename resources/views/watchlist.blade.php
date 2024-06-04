@@ -1,6 +1,5 @@
 @extends('layouts._default.user-main')
 @section('content')
-    {{-- {{ dd($myWatchlist) }} --}}
     <section class="p-5 py-5 bg-white dark:bg-gray-900">
         <p class="text-2xl font-bold text-gray-800 dark:text-white py-5">
             My Watchlist
@@ -17,7 +16,7 @@
         @auth
             @if (count($myWatchlist) == 0)
                 <p class="text-2xl text-center font-medium text-gray-800 dark:text-white py-5">
-                    Your watchlist is empty. <a href="{{ url('movies') }}"
+                    Your watchlist is empty. <a href="{{ url('/') }}"
                         class="text-blue-500 dark:text-blue-300 hover:text-blue-700 dark:hover:text-blue-500">Browse
                         movies</a> to add to your watchlist.
                 </p>
@@ -42,7 +41,7 @@
                         <form action="{{ url('watchlist/' . $movie->watchlist_id) }}" method="POST" class="inline">
                             @csrf
                             @method('DELETE')
-                            <input type="hidden" name="movie_id" value="{{ $movie->id }}">
+                            <input type="hidden" name="movie_id" value="{{ $movie->movie_id }}">
                             <button type="submit"
                                 onclick="return confirm('Are you sure you want to remove this movie from your watchlist?')"
                                 class="mt-3 inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-bold text-white  focus:ring-4 focus:outline-none focus:ring-blue-300 bg-red-700 text-center me-2 mb-2 dark:border-red-500 dark:text-white dark:hover:text-white dark:hover:bg-red-500 dark:focus:ring-red-800 h-10 px-4 py-2">
