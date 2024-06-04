@@ -3,8 +3,8 @@
     <div class="container px-4 mx-auto xl:px-0">
         <div class="grid gap-12 xl:grid-cols-6 xl:gap-24">
             <div class="col-span-2">
-                <a href="#" class="flex mr-4">
-                    <img src="https://flowbite.com/docs/images/logo.svg" class="h-8 mr-3" alt="Sineflix Logo" />
+                <a href="{{ url('/') }}" class="flex mr-4">
+                    <img src="{{ url('images/logo-transparent.png') }}" class="h-8 mr-3" alt="Sineflix Logo" />
                     <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Sineflix</span>
                 </a>
                 <p class="max-w-lg mt-4 text-gray-500 dark:text-gray-400">

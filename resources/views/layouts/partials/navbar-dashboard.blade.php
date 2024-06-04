@@ -18,7 +18,7 @@
                     </svg>
                 </button>
                 <a href="{{ url('/') }}" class="flex ml-2 md:mr-24">
-                    <img src="https://flowbite.com/docs/images/logo.svg" class="h-8 mr-3" alt="Sinelix Logo" />
+                    <img src="{{ url('images/logo-transparent.png') }}" class="h-8 mr-3" alt="Sinelix Logo" />
                     <span
                         class="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">Sineflix</span>
                 </a>
@@ -49,7 +49,7 @@
                                 <div class="w-full pl-3">
                                     <div class="text-gray-500 font-normal text-sm mb-1.5 dark:text-gray-400"><span
                                             class="font-semibold text-gray-900 dark:text-white">
-                                            {{ $logActivity->user->name }}:
+                                            {{ $logActivity->user->name ?? '' }}:
                                         </span>
                                         {{ $logActivity->description }}
                                         on {{ $logActivity->table_affected }} </div>

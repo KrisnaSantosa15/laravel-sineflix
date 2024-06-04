@@ -29,6 +29,10 @@
                                         </th>
                                         <th scope="col"
                                             class="p-4 text-xs font-medium tracking-wider text-left text-gray-500 uppercase dark:text-white">
+                                            Table Affected
+                                        </th>
+                                        <th scope="col"
+                                            class="p-4 text-xs font-medium tracking-wider text-left text-gray-500 uppercase dark:text-white">
                                             Action
                                         </th>
                                     </tr>
@@ -38,12 +42,16 @@
                                         <tr>
                                             <td
                                                 class="p-4 text-sm font-normal text-gray-900 whitespace-nowrap dark:text-white">
-                                                {{ $logActivity->user->name }} <span
-                                                    class="font-semibold">{{ $logActivity->description }}</span>
+                                                {{ $logActivity->user->name ?? '' }}
+                                                <span class="font-semibold">{{ $logActivity->description }}</span>
                                             </td>
                                             <td
                                                 class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap dark:text-gray-400">
                                                 {{ $logActivity->action_date->diffForHumans() }}
+                                            </td>
+                                            <td
+                                                class="p-4 text-sm font-normal text-gray-500 whitespace-nowrap dark:text-gray-400">
+                                                {{ $logActivity->table_affected }}
                                             </td>
 
                                             @if ($logActivity->action == 'insert')
