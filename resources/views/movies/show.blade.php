@@ -10,11 +10,14 @@
                 {{-- Youtube Embed --}}
                 {{-- change watch: https://www.youtube.com/watch?v=_pK1lKnV5XU, to embed: https://www.youtube.com/embed/_pK1lKnV5XU --}}
                 <div class="video-container py-3 flex justify-center">
-                    <div class="video-container">
-                        <iframe src="{{ str_replace('watch?v=', 'embed/', $movie->trailer_url) }}"
-                            title="{{ $movie->title }}" frameborder="0"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                            allowfullscreen> </iframe>
+                    <div class="video-container w-5/6 h-auto max-w-full">
+                        <div class="aspect-video">
+                            <iframe class="aspect-video w-full"
+                                src="{{ str_replace('watch?v=', 'embed/', $movie->trailer_url) }}"
+                                title="{{ $movie->title }}" frameborder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowfullscreen class="w-full h-full"></iframe>
+                        </div>
                     </div>
                 </div>
                 <p class="text-gray-800 dark:text-white uppercase font-bold">Storyline</p>
