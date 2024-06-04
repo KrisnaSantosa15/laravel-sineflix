@@ -16,13 +16,14 @@ class WatchlistController extends Controller
         // Get the user's watchlist
         $watchlist = Watchlist::where('user_id', Auth::id())->get();
         $movies = $watchlist->pluck('movie_id')->toArray();
+        $movieRecommendations = DB::select('CALL GenerateMovieRecommendations(?, ?)', [Auth::id(), 5]);
         // $myWatchlist = Movie::whereIn('id', $movies)->get();
 
         // get myWatchlist from view named UserWatchlist
         $myWatchlist = DB::select('SELECT * FROM UserWatchlist WHERE user_id = ?', [Auth::id()]);
 
         // Return the watchlist view with the watchlist data
-        return view('watchlist', compact('myWatchlist'));
+        return view('watchlist', compact('myWatchlist', 'movieRecommendations'));
     }
 
     public function toggle(Request $request)

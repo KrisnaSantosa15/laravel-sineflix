@@ -65,4 +65,40 @@
             <div class="swiper-button-prev"></div>
         </div>
     </section>
+
+
+    {{-- {{ dd($movieRecommendations) }} --}}
+    {{-- Recommendation --}}
+    @if (count($movieRecommendations) != 0)
+        <section class="p-5 py-5 bg-white dark:bg-gray-900">
+            <p class="text-2xl font-bold text-gray-800 dark:text-white py-5">
+                Recommendation
+            </p>
+            <div class="swiper movies-swiper">
+                <div class="swiper-wrapper">
+                    @foreach ($movieRecommendations as $recommendation)
+                        <div class="swiper-slide">
+                            <a href="{{ url('movies/' . $recommendation->slug) }}">
+                                <img src="{{ $recommendation->poster_url }}" alt="{{ $recommendation->title }}" />
+                                <p class="font-bold movie-title truncate text-lg text-gray-800 dark:text-white">
+                                    {{ $recommendation->title }}
+                                </p>
+                                <p class="text-sm rating text-gray-800 dark:text-white">
+                                    &#9733; {{ $recommendation->rating }} |
+                                    <span class="genre text-gray-500"> {{ $recommendation->genres }}
+                                    </span>
+                                </p>
+                            </a>
+                        </div>
+                    @endforeach
+                </div>
+                <!-- <div class="swiper-pagination"></div> -->
+
+                <!-- Add Arrows -->
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+            </div>
+        </section>
+    @endif
+
 @endsection

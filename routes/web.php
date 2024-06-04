@@ -89,3 +89,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'admin']], function 
 });
 
 require __DIR__ . '/auth.php';
+
+// Not Found
+Route::fallback(function () {
+    return view('errors.404');
+});

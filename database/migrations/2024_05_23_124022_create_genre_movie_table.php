@@ -29,14 +29,15 @@ return new class extends Migration
             ['movie_id' => 2, 'genre_id' => 4, 'created_at' => now(), 'updated_at' => now()],
             ['movie_id' => 2, 'genre_id' => 5, 'created_at' => now(), 'updated_at' => now()],
             ['movie_id' => 2, 'genre_id' => 6, 'created_at' => now(), 'updated_at' => now()],
-            ['movie_id' => 3, 'genre_id' => 7, 'created_at' => now(), 'updated_at' => now()],
-            ['movie_id' => 3, 'genre_id' => 8, 'created_at' => now(), 'updated_at' => now()],
-            ['movie_id' => 3, 'genre_id' => 9, 'created_at' => now(), 'updated_at' => now()],
-            ['movie_id' => 4, 'genre_id' => 10, 'created_at' => now(), 'updated_at' => now()],
-            ['movie_id' => 5, 'genre_id' => 11, 'created_at' => now(), 'updated_at' => now()],
-            ['movie_id' => 5, 'genre_id' => 12, 'created_at' => now(), 'updated_at' => now()],
-            ['movie_id' => 5, 'genre_id' => 13, 'created_at' => now(), 'updated_at' => now()],
-            ['movie_id' => 6, 'genre_id' => 14, 'created_at' => now(), 'updated_at' => now()],
+            ['movie_id' => 3, 'genre_id' => 1, 'created_at' => now(), 'updated_at' => now()],
+            ['movie_id' => 3, 'genre_id' => 2, 'created_at' => now(), 'updated_at' => now()],
+            ['movie_id' => 3, 'genre_id' => 3, 'created_at' => now(), 'updated_at' => now()],
+            ['movie_id' => 3, 'genre_id' => 4, 'created_at' => now(), 'updated_at' => now()],
+            ['movie_id' => 4, 'genre_id' => 5, 'created_at' => now(), 'updated_at' => now()],
+            ['movie_id' => 5, 'genre_id' => 6, 'created_at' => now(), 'updated_at' => now()],
+            ['movie_id' => 5, 'genre_id' => 1, 'created_at' => now(), 'updated_at' => now()],
+            ['movie_id' => 5, 'genre_id' => 2, 'created_at' => now(), 'updated_at' => now()],
+            ['movie_id' => 6, 'genre_id' => 3, 'created_at' => now(), 'updated_at' => now()],
         ]);
     }
 
