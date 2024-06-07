@@ -183,7 +183,7 @@ class AdminController extends Controller
         } catch (\Exception $e) {
             // Rollback the transaction in case of error
             DB::rollBack();
-            return redirect()->route('admin.users.index')->with('error', 'An error occurred while updating the user. ' . $e->getMessage());
+            return redirect()->route('admin.users.index')->with('error', 'An error occurred while updating the user.');
         }
     }
 
