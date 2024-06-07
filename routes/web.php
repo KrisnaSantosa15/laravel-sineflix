@@ -8,6 +8,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AdminGenreController;
 use App\Http\Controllers\AdminStarsController;
 use App\Http\Controllers\AdminMovieController;
+use App\Http\Controllers\FooterController;
 use App\Http\Controllers\WatchlistController;
 use App\Http\Controllers\ReviewController;
 
@@ -21,7 +22,8 @@ Route::get('/movies/genre/{genre:slug}', [MovieController::class, 'genre'])->nam
 Route::get('/search', [MovieController::class, 'search'])->name('movies.search');
 // search ajax
 Route::get('/search-ajax', [MovieController::class, 'searchAjax'])->name('movies.search-ajax');
-
+Route::get('/terms-and-conditions', [FooterController::class, 'termsAndConditions'])->name('footer.terms-and-conditions');
+Route::get('/privacy-policy', [FooterController::class, 'privacyPolicy'])->name('footer.privacy-policy');
 // Reviews
 Route::middleware(['auth'])->group(function () {
     Route::post('/reviews', [ReviewController::class, 'store'])->name('reviews.store');
