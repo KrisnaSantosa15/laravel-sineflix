@@ -17,7 +17,7 @@ return new class extends Migration
 
         // Create the view
         DB::unprepared('
-            CREATE VIEW UserWatchlist AS
+           CREATE VIEW UserWatchlist AS
             SELECT
                 u.id AS user_id,
                 u.name AS user_name,
@@ -35,7 +35,7 @@ return new class extends Migration
             JOIN movies m ON w.movie_id = m.id
             JOIN genre_movie gm ON m.id = gm.movie_id
             JOIN genres g ON gm.genre_id = g.id
-            GROUP BY u.id, w.movie_id, w.id, m.title, m.slug, m.poster_url, m.rating, m.release_date;
+            GROUP BY u.id, u.name, u.email, w.movie_id, w.id, m.title, m.slug, m.poster_url, m.rating, m.release_date;
         ');
     }
 

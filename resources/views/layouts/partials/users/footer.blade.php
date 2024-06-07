@@ -78,11 +78,11 @@
                 <h3 class="mb-6 text-sm font-semibold text-gray-600 uppercase dark:text-white">Legal</h3>
                 <ul>
                     <li class="mb-4">
-                        <a href="https://flowbite.com/privacy-policy/" target="_blank" rel="noreferrer"
+                        <a href="{{url('privacy-policy')}}" target="_blank" rel="noreferrer"
                             class="font-normal text-gray-600 hover:underline dark:text-gray-400">Privacy Policy</a>
                     </li>
                     <li class="mb-4">
-                        <a href="https://flowbite.com/terms-and-conditions/" target="_blank" rel="noreferrer"
+                        <a href="{{url('terms-and-conditions')}}" target="_blank" rel="noreferrer"
                             class="font-normal text-gray-600 hover:underline dark:text-gray-400">Terms &amp;
                             Conditions</a>
                     </li>

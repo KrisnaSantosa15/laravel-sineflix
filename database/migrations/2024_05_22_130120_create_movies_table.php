@@ -28,6 +28,8 @@ return new class extends Migration
             $table->timestamps();
         });
 
+        
+
         // Dummy data
         DB::table('movies')->insert([
             ['title' => 'Inception', 'slug' => 'inception', 'release_date' => '2010-07-16', 'type' => 'MOVIE', 'director' => 'Christopher Nolan', 'plot_summary' => 'A thief who steals corporate secrets through the use of dream-sharing technology.', 'rating' => 4.5, 'poster_url' => 'https://www.movieposters.com/cdn/shop/files/inception.mpw.123395_9e0000d1-bc7f-400a-b488-15fa9e60a10c_480x.progressive.jpg?v=1708527589', 'trailer_url' => 'https://www.youtube.com/watch?v=YoHD9XEInc0/', 'created_at' => now(), 'updated_at' => now()],
