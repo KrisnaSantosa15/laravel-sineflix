@@ -10,6 +10,7 @@ use App\Http\Controllers\AdminStarsController;
 use App\Http\Controllers\AdminMovieController;
 use App\Http\Controllers\WatchlistController;
 use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\EULAController;
 
 Route::get('/', [MovieController::class, 'index'])->name('movies.index');
 Route::get('/movies/{movie:slug}', [MovieController::class, 'show'])->name('movies.show');
@@ -21,6 +22,7 @@ Route::get('/movies/genre/{genre:slug}', [MovieController::class, 'genre'])->nam
 Route::get('/search', [MovieController::class, 'search'])->name('movies.search');
 // search ajax
 Route::get('/search-ajax', [MovieController::class, 'searchAjax'])->name('movies.search-ajax');
+Route::get('/eula', [EULAController::class, 'eula']);
 
 // Reviews
 Route::middleware(['auth'])->group(function () {

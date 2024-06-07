@@ -87,7 +87,7 @@
                             Conditions</a>
                     </li>
                     <li class="mb-4">
-                        <a href="https://flowbite.com/license/"
+                        <a href="{{url('eula')}}"
                             class="font-normal text-gray-600 hover:underline dark:text-gray-400">EULA</a>
                     </li>
                 </ul>
