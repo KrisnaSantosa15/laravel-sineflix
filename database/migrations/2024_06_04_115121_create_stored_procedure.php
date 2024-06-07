@@ -48,7 +48,7 @@ return new class extends Migration
                 WHERE r.user_id = userId
                 AND r.rating < 3
             )
-            GROUP BY m.id
+            GROUP BY m.id, m.slug
             LIMIT numRecommendations;
 
             DROP TEMPORARY TABLE IF EXISTS PreferredGenres;

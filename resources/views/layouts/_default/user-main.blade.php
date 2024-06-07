@@ -8,6 +8,7 @@
 <body class="bg-gray-50 dark:bg-gray-800">
     @include('layouts.partials.users.navbar')
     <main>
+        
         @if (session('success'))
             <div id="toast-success"
                 class="flex absolute top-2.5 right-2.5 z-50 items-center max-w-xs p-4 mb-4 text-gray-500 bg-white rounded-lg shadow-lg dark:text-gray-400 dark:bg-gray-700"

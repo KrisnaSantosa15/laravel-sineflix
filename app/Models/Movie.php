@@ -18,6 +18,7 @@ class Movie extends Model
         'plot_summary',
         'rating',
         'poster_url',
+        'poster_banner',
         'trailer_url',
     ];
 
