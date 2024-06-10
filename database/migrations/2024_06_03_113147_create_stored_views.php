@@ -19,23 +19,23 @@ return new class extends Migration
         DB::unprepared('
             CREATE VIEW UserWatchlist AS
             SELECT
-                u.id AS user_id,
-                u.name AS user_name,
-                u.email AS user_email,
-                w.id AS watchlist_id,
-                w.movie_id,
-                m.title,
-                m.slug,
-                m.poster_url,
-                m.rating,
-                m.release_date,
-                GROUP_CONCAT(g.name) AS genres
+            u.id AS user_id,
+            u.name AS user_name,
+            u.email AS user_email,
+            w.id AS watchlist_id,
+            w.movie_id,
+            m.title,
+            m.slug,
+            m.poster_url,
+            m.rating,
+            m.release_date,
+            GROUP_CONCAT(g.name) AS genres
             FROM users u
             JOIN watchlists w ON u.id = w.user_id
             JOIN movies m ON w.movie_id = m.id
             JOIN genre_movie gm ON m.id = gm.movie_id
             JOIN genres g ON gm.genre_id = g.id
-            GROUP BY u.id, w.movie_id, w.id, m.title, m.slug, m.poster_url, m.rating, m.release_date;
+            GROUP BY u.id, u.name, w.movie_id, w.id, m.title, m.slug, m.poster_url, m.rating, m.release_date, u.email;
         ');
     }
 

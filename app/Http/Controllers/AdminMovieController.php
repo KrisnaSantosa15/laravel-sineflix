@@ -21,7 +21,7 @@ class AdminMovieController extends Controller
         $stars = Stars::all();
         $movies = AdminMovie::when(request('keyword'), function ($query) {
             return $query->where('title', 'like', '%' . request('keyword') . '%');
-        })->paginate(2)->withQueryString();
+        })->paginate(4)->withQueryString();
 
         return view('admin.movies.index', compact(['movies', 'genres', 'stars', 'types']));
     }
@@ -48,6 +48,7 @@ class AdminMovieController extends Controller
             'plot_summary' => 'required',
             'rating' => 'required|numeric|min:0|max:5|',
             'poster_url' => 'required',
+            'poster_banner' => 'required',
             'trailer_url' => 'required',
         ]);
 
@@ -66,6 +67,7 @@ class AdminMovieController extends Controller
             'plot_summary' => $request->plot_summary,
             'rating' => $request->rating,
             'poster_url' => $request->poster_url,
+            'poster_banner' => $request->poster_banner,
             'trailer_url' => $request->trailer_url,
         ]);
 
@@ -99,6 +101,8 @@ class AdminMovieController extends Controller
      */
     public function update(Request $request, AdminMovie $adminMovie)
     {
+        //dd($request);
+
         // Validate the request
         $request->validate([
             'title' => 'required',
@@ -108,6 +112,7 @@ class AdminMovieController extends Controller
             'plot_summary' => 'required',
             'rating' => 'required|numeric|min:0|max:5|',
             'poster_url' => 'required',
+            'poster_banner' => 'required',
             'trailer_url' => 'required',
         ]);
 
@@ -126,6 +131,7 @@ class AdminMovieController extends Controller
             'plot_summary' => $request->plot_summary,
             'rating' => $request->rating,
             'poster_url' => $request->poster_url,
+            'poster_banner' => $request->poster_banner,
             'trailer_url' => $request->trailer_url,
         ]);
 

@@ -8,7 +8,7 @@
                 <!-- Slides -->
                 @foreach ($movies->take(5) as $movie)
                     <div class="swiper-slide">
-                        <img src="{{ $movie->poster_url }}" alt="{{ $movie->title }}" />
+                        <img src="{{ $movie->poster_banner }}" alt="{{ $movie->title }}" />
                         <div class="overlay absolute inset-0 top-0 bottom-0 right-0 left-0"></div>
                         <div
                             class="p-8 text-white h-full flex flex-col justify-center md:justify-end z-10 absolute w-full md:w-1/2">
