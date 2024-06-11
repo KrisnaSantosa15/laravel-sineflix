@@ -1,8 +1,8 @@
 <nav class="bg-white border-gray-200 dark:bg-gray-900">
     <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
         <a href="{{ url('/') }}" class="flex items-center space-x-3 rtl:space-x-reverse">
-            <img src="{{ url('images/logo-transparent.png') }}" class="h-8" alt="Sineflix Logo" />
-            <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Sineflix</span>
+            <img src="{{ url('images/SineFlix-logo.png') }}" class="h-8" alt="Sineflix Logo" />
+            <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">SineFlix</span>
         </a>
         <div class="flex md:order-2 space-y-2">
             <button type="button" data-modal-target="search-modal" data-modal-toggle="search-modal"

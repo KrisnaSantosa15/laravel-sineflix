@@ -4,8 +4,8 @@
         <div class="grid gap-12 xl:grid-cols-6 xl:gap-24">
             <div class="col-span-2">
                 <a href="{{ url('/') }}" class="flex mr-4">
-                    <img src="{{ url('images/logo-transparent.png') }}" class="h-8 mr-3" alt="Sineflix Logo" />
-                    <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Sineflix</span>
+                    <img src="{{ url('images/SineFlix-logo.png') }}" class="h-8 mr-3" alt="Sineflix Logo" />
+                    <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">SineFlix</span>
                 </a>
                 <p class="max-w-lg mt-4 text-gray-500 dark:text-gray-400">
                     Sineflix is a movies recommendation service platform that offers a wide variety of movies
@@ -78,16 +78,16 @@
                 <h3 class="mb-6 text-sm font-semibold text-gray-600 uppercase dark:text-white">Legal</h3>
                 <ul>
                     <li class="mb-4">
-                        <a href="https://flowbite.com/privacy-policy/" target="_blank" rel="noreferrer"
+                        <a href="{{url('privacy-and-policy')}}" target="_blank" rel="noreferrer"
                             class="font-normal text-gray-600 hover:underline dark:text-gray-400">Privacy Policy</a>
                     </li>
                     <li class="mb-4">
-                        <a href="https://flowbite.com/terms-and-conditions/" target="_blank" rel="noreferrer"
+                        <a href="{{url('terms-and-conditions')}}" target="_blank" rel="noreferrer"
                             class="font-normal text-gray-600 hover:underline dark:text-gray-400">Terms &amp;
                             Conditions</a>
                     </li>
                     <li class="mb-4">
-                        <a href="https://flowbite.com/license/"
+                        <a href="{{url('eula')}}"
                             class="font-normal text-gray-600 hover:underline dark:text-gray-400">EULA</a>
                     </li>
                 </ul>

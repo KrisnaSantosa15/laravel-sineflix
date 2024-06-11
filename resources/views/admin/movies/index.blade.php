@@ -19,7 +19,7 @@
                                     <path
                                         d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z">
                                     </path>
-                                    </savg>
+                                    </svg>
                                     Home
                             </a>
                         </li>
@@ -345,21 +345,28 @@
                                 @endforeach
                             </select>
                         </div>
-                        <div class="col-span-2">
+                        <div class="col-span-3">
                             <label for="director"
                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Director</label>
                             <input type="text" name="director" id="director"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                 placeholder="Type movie director" required="">
                         </div>
-                        <div class="col-span-2">
+                        <div class="col-span-3">
                             <label for="trailer_url"
                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Trailer URL</label>
                             <input type="url" name="trailer_url" id="trailer_url"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                 placeholder="Type movie trailer URL" required="">
                         </div>
-                        <div class="col-span-2">
+                        <div class="col-span-3">
+                            <label for="poster_banner"
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Banner URL</label>
+                            <input type="url" name="poster_banner" id="poster_banner"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                placeholder="Type movie banner URL" required="">
+                        </div>
+                        <div class="col-span-3">
                             <label for="poster_url"
                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Poster URL</label>
                             <input type="url" name="poster_url" id="poster_url"
@@ -483,14 +490,14 @@
                                     @endforeach
                                 </select>
                             </div>
-                            <div class="col-span-2">
+                            <div class="col-span-3">
                                 <label for="director"
                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Director</label>
                                 <input type="text" name="director" id="director"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                     placeholder="Type movie director" required="" value="{{ $movie->director }}">
                             </div>
-                            <div class="col-span-2">
+                            <div class="col-span-3">
                                 <label for="trailer_url"
                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Trailer
                                     URL</label>
@@ -499,7 +506,14 @@
                                     placeholder="Type movie trailer URL" required=""
                                     value="{{ $movie->trailer_url }}">
                             </div>
-                            <div class="col-span-2">
+                            <div class="col-span-3">
+                                <label for="poster_banner"
+                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Banner URL</label>
+                                <input type="url" name="poster_banner" id="poster_banner"
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                    placeholder="Type movie banner URL" required="" value="{{ $movie->poster_banner }}">
+                            </div>
+                            <div class="col-span-3">
                                 <label for="poster_url"
                                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Poster URL</label>
                                 <input type="url" name="poster_url" id="poster_url"

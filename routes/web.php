@@ -10,6 +10,8 @@ use App\Http\Controllers\AdminStarsController;
 use App\Http\Controllers\AdminMovieController;
 use App\Http\Controllers\WatchlistController;
 use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\EULAController;
+use App\Http\Controllers\FooterController;
 
 Route::get('/', [MovieController::class, 'index'])->name('movies.index');
 Route::get('/movies/{movie:slug}', [MovieController::class, 'show'])->name('movies.show');
@@ -21,6 +23,9 @@ Route::get('/movies/genre/{genre:slug}', [MovieController::class, 'genre'])->nam
 Route::get('/search', [MovieController::class, 'search'])->name('movies.search');
 // search ajax
 Route::get('/search-ajax', [MovieController::class, 'searchAjax'])->name('movies.search-ajax');
+Route::get('/eula', [EULAController::class, 'eula']);
+Route::get('/terms-and-conditions', [FooterController::class, 'termsAndConditions'])->name('footer.terms-and-conditions');
+Route::get('/privacy-and-policy', [FooterController::class, 'privacyPolicy'])->name('footer.privacy-and-policy');
 
 // Reviews
 Route::middleware(['auth'])->group(function () {

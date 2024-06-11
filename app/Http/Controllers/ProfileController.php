@@ -91,7 +91,7 @@ class ProfileController extends Controller
         } catch (\Exception $e) {
             // Rollback the transaction in case of error
             DB::rollBack();
-            return redirect()->route('profile.edit')->with('error', 'An error occurred while updating the profile. ' . $e->getMessage());
+            return redirect()->route('profile.edit')->with('error', 'An error occurred while updating the profile.');
         }
     }
 
