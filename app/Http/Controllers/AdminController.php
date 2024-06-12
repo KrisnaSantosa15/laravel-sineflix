@@ -70,7 +70,7 @@ class AdminController extends Controller
             return $query->where('name', 'like', '%' . request('keyword') . '%');
         })
             ->where('id', '!=', auth()->id())
-            ->paginate(2)
+            ->paginate(5)
             ->withQueryString();
 
         return view('admin.users.index', compact('users'));

@@ -21,7 +21,7 @@ class AdminMovieController extends Controller
         $stars = Stars::all();
         $movies = AdminMovie::when(request('keyword'), function ($query) {
             return $query->where('title', 'like', '%' . request('keyword') . '%');
-        })->paginate(4)->withQueryString();
+        })->paginate(5)->withQueryString();
 
         return view('admin.movies.index', compact(['movies', 'genres', 'stars', 'types']));
     }

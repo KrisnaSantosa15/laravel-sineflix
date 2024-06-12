@@ -13,10 +13,19 @@ class AdminGenreController extends Controller
      */
     public function index()
     {
+        // Define the number of items per page
+        $perPage = 5;
+
         // Show all genres with pagination and search query from url
         $genres = AdminGenre::when(request('keyword'), function ($query) {
             return $query->where('name', 'like', '%' . request('keyword') . '%');
-        })->paginate(2)->withQueryString();
+        })->paginate($perPage, ['*'], 'page')->withQueryString();
+
+        // Calculate the starting item number for the current page
+        $startItem = ($genres->currentPage() - 1) * $perPage + 1;
+
+        return view('admin.genres.index', compact('genres', 'startItem'));
+
 
         return view('admin.genres.index', compact('genres'));
     }

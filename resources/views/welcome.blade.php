@@ -108,7 +108,7 @@
         </p>
         <div class="swiper popular-week-swiper">
             <div class="swiper-wrapper">
-                @foreach ($movies->sortBy('rating')->sortBy('release_date')->take(20) as $movie)
+                @foreach ($movies->sortByDesc('rating')->take(20) as $movie)
                     <div class="swiper-slide">
                         <a href="{{ url('movies/' . $movie->slug) }}">
                             <div class="flex">

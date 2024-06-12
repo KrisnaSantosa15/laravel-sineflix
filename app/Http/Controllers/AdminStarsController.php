@@ -17,7 +17,7 @@ class AdminStarsController extends Controller
         // Show all stars with pagination and search query from url
         $stars = AdminStars::when(request('keyword'), function ($query) {
             return $query->where('name', 'like', '%' . request('keyword') . '%');
-        })->paginate(2)->withQueryString();
+        })->paginate(5)->withQueryString();
 
         return view('admin.stars.index', compact('stars'));
     }
